@@ -13,16 +13,10 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('app');
+// });
 
-// Route::get('/user/{id}', function($id) {
-//     return 'true';
-// })->where('id', '[0-9]+')->name('user');
+Route::view('/{any}', 'app')
+    ->where('any', '.*');
 
-// Route::resource('products', ProductController::class);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

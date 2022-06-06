@@ -29,6 +29,11 @@ class User extends Authenticatable
         return $this->hasMany(Participant::class,'user_id');
     }
 
+    public function contacts()
+    {
+        return $this->belongsToMany(Contact::class,'user_contact','user_id','contact_id');
+    }
+
     protected $fillable = [
         'name',
         'email',
