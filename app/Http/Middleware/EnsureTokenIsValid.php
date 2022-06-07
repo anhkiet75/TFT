@@ -16,6 +16,7 @@ class EnsureTokenIsValid
      */
     public function handle(Request $request, Closure $next)
     {
+        // echo $request;
         return $next($request);
     }
 }

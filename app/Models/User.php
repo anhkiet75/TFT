@@ -8,11 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Laracasts\Presenter\PresentableTrait;
+use App\Presenters\UserPresenter;
 
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    use PresentableTrait;
+    // use UserPresenter;
+    protected $presenter = UserPresenter::class;
     /**
      * The attributes that are mass assignable.
      *
@@ -33,6 +37,7 @@ class User extends Authenticatable implements JWTSubject
     public function contacts()
     {
         return $this->belongsToMany(Contact::class,'user_contact','user_id','contact_id');
+
     }
 
     protected $fillable = [

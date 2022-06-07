@@ -89,4 +89,12 @@ class AuthController extends Controller
         ]);
     }
 
+    public function test(User $user)
+    {
+        return response()->json([
+            'status' => 'success',
+            'fullname' => $user->present()->fullname
+        ]);
+    }
+
 }
