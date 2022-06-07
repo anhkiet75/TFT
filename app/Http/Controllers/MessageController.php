@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Message;
 
 class MessageController extends Controller
 {
@@ -29,13 +31,15 @@ class MessageController extends Controller
 
         $mess = Message::create([
             'message' => $request->message,
-            'message_type' => $request->message_type
+            'message_type' => $request->message_type,
+            'conversation_id' => '1',
+            'sender_id' => Auth::id()
         ]);
 
         return response()->json([
             'status' => 'success',
             'message' => 'Todo created successfully',
-            'todo' => $todo,
+            'message' => $mess,
         ]);
     }
 }

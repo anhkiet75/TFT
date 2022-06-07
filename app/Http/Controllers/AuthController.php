@@ -23,12 +23,14 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);
+
         if (!$token) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized',
             ], 401);
         }
+        // $token = Auth::user()->createToken('token')->plainTextToken;
 
         $user = Auth::user();
         return response()->json([
@@ -39,7 +41,6 @@ class AuthController extends Controller
                     'type' => 'bearer',
                 ]
             ]);
-
     }
 
     public function register(Request $request){
