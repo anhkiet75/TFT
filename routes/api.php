@@ -5,7 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\ReactionController;
+use App\Http\Controllers\UserContactController;
+use App\Models\Conversation;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,9 +23,9 @@ use App\Http\Controllers\MessageController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::prefix('auth')->group(function(){
     Route::controller(AuthController::class)->group(function () {
@@ -39,5 +45,13 @@ Route::group(['prefix' => 'mess', 'middleware' => ['token']], function(){
         Route::put('message/{id}', 'update');
         Route::delete('message/{id}', 'destroy');
     }); 
+});
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::resource('contact', UserContactController::class);
+    Route::resource('conversation', ConversationController::class);
+    Route::resource('participant', ParticipantController::class);
+    Route::post('reaction',[ReactionController::class,'react']);
+    Route::delete('reaction',[ReactionController::class,'unreact']);
 });
 

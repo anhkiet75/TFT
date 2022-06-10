@@ -29,7 +29,7 @@ Vue.use(Vuetify);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('App', require('./components/App.vue').default);;
-Vue.component('user', require('./components/User'));
+Vue.component('user', require('./components/User').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

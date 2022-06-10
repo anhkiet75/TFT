@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "casbin/laravel-authz": "^3.1",
         "datacreativa/laravel-presentable": "^0.0.2",
         "guzzlehttp/guzzle": "^7.2",
         "laracasts/presenter": "^0.2.5",

@@ -13,13 +13,21 @@ class MessageController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $mess = Message::all();
+        // $mess = Message::all();
+        $mess = Message::where('conversation_id',$request->conversation_id)
+                        ->orderBy('created_at', 'DESC')
+                        ->get();
         return response()->json([
             'status' => 'success',
             'message' => $mess,
         ]);
+    }
+
+    public function create()
+    {
+        
     }
 
     public function store(Request $request)
@@ -32,14 +40,68 @@ class MessageController extends Controller
         $mess = Message::create([
             'message' => $request->message,
             'message_type' => $request->message_type,
-            'conversation_id' => '1',
+            'conversation_id' => $request->conversation_id,
             'sender_id' => Auth::id()
         ]);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Todo created successfully',
+            'message' => 'Message created successfully',
             'message' => $mess,
         ]);
     }
+
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $mess = Message::find($id);
+        $mess->update([
+            'message' => $request->message,
+            'message_type' => $request->message_type
+        ]);
+        return response()->json([
+            'status'   => 'update success',
+            'contact'  =>  $mess,
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $mess = Message::find($id);
+        $mess->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Deleted message',
+            'message' => $mess,
+        ]); 
+    }
+    
 }

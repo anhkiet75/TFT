@@ -30,14 +30,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Message::class,'sender_id');
     }
 
-    public  function participants() {
+    public  function participants() {   
         return $this->hasMany(Participant::class,'user_id');
     }
 
-    public function contacts()
+    public function usercontacts()
     {
-        return $this->belongsToMany(Contact::class,'user_contact','user_id','contact_id');
-
+        return $this->hasMany(User_contact::class,'user_contact');
     }
 
     protected $fillable = [
@@ -74,4 +73,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+  
 }

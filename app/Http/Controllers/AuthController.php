@@ -93,7 +93,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'status' => 'success',
-            'fullname' => $user->present()->fullname
+            'fullname' => $user->fullname
         ]);
     }
 
