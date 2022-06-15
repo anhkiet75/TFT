@@ -11,7 +11,9 @@ class Equipment extends Model
     protected $primaryKey = 'serial_number';
     public $incrementing = false;
     protected $keyType = 'string';
-    
+
+    protected $guarded = [];
+
     public function users() {
         return $this->hasMany(User::class,'user_id');
     }

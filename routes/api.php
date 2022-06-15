@@ -2,15 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ConversationController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ParticipantController;
-use App\Http\Controllers\ReactionController;
-use App\Http\Controllers\UserContactController;
+use App\Http\Controllers\EquipmentController;
 use App\Models\Conversation;
+use App\Models\Equipment;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,25 +28,13 @@ Route::prefix('auth')->group(function(){
         Route::post('register', 'register');
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
-        Route::get('user/{user}', 'test');
+        // Route::get('user/{user}', 'test');
     });
 });
 
-Route::group(['prefix' => 'mess', 'middleware' => ['token']], function(){
-    Route::controller(MessageController::class)->group(function () {
-        Route::get('message', 'index');
-        Route::post('message', 'store');
-        Route::get('message/{id}', 'show');
-        Route::put('message/{id}', 'update');
-        Route::delete('message/{id}', 'destroy');
-    }); 
-});
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::resource('contact', UserContactController::class);
-    Route::resource('conversation', ConversationController::class);
-    Route::resource('participant', ParticipantController::class);
-    Route::post('reaction',[ReactionController::class,'react']);
-    Route::delete('reaction',[ReactionController::class,'unreact']);
+        Route::apiResource('equipment', EquipmentController::class);
+        Route::apiResource('category', EquipmentController::class);
 });
 
