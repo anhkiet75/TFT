@@ -22,22 +22,10 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
-    public function conversations() {
-        return $this->hasMany(Conversation::class,'creator_id');
+    public function equiptment() {
+        return $this->belongsTo(Equiptment::class,'user_id');
     }
 
-    public  function messages() {
-        return $this->hasMany(Message::class,'sender_id');
-    }
-
-    public  function participants() {   
-        return $this->hasMany(Participant::class,'user_id');
-    }
-
-    public function usercontacts()
-    {
-        return $this->hasMany(User_contact::class,'user_contact');
-    }
 
     protected $fillable = [
         'name',
@@ -52,7 +40,6 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**

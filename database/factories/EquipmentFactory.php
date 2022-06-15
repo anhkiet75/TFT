@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
+use Database\Factories\Helpers\FactoryHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +20,12 @@ class EquipmentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'serial_number' =>  $this->faker->numerify('##LCD#####'),
+            'name' => $this->faker->name(),
+            'status' => 'IN_USE',
+            'description' => $this->faker->text(),
+            'user_id'  => FactoryHelper::getRandomModelId(User::class),
+            'category_id'  => FactoryHelper::getRandomModelId(Category::class),
         ];
     }
 }

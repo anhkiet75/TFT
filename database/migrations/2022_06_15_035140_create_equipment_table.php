@@ -14,7 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('equipment', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->string('serial_number');
+            $table->primary('serial_number');
+            $table->string('name');
+            $table->string('status');
+            $table->string('description');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
