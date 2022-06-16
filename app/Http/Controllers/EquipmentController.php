@@ -17,9 +17,10 @@ class EquipmentController extends Controller
     public function index()
     {
         try {
-            $equipment = Equipment::latest()->get();
+            $equipment = Equipment::latest()->paginate(10);
             if ($equipment) 
-                return new EquipmentResource($equipment);
+                return view('equipment',['data' => $equipment]);
+                // return new EquipmentResource($equipment);
             return response()->json(["Error" => "Empty"],400);
         }
         catch (Exception $e) {

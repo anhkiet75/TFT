@@ -11,10 +11,14 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:web', ['except' => ['login','register','index']]);
     }
 
-    public function login(Request $request)
+    public function index() {
+        return view('auth.login');
+    }
+
+    public function login(Request $request) 
     {
         $request->validate([
             'email' => 'required|string|email',
@@ -35,11 +39,7 @@ class AuthController extends Controller
         $user = Auth::user();
         return response()->json([
                 'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
+                'user' => $user
             ]);
     }
 
@@ -60,7 +60,7 @@ class AuthController extends Controller
             'birthdate' => $input['birthdate']
         ]);
 
-        $token = Auth::login($user);
+        $token = Auth::login($user);        
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',

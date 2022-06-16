@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\UserController;
+use App\Models\Equipment;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +19,20 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/', function () {
-    return view('app');
-});
+    return view('home');
+})->name('home')->middleware('auth:web');
+
+Route::get('login', [AuthController::class,'index'])->name('login');
+Route::post('login', [AuthController::class,'login'])->name('loginauth');
+
+//Route::get('/user', [UserController::class,'index'])->name('web.user.index');
+//Route::put('/user/{id}', [UserController::class,'update'])->name('web.user.update');
+//Route::delete('/user/{id}', [UserController::class,'destroy'])->name('web.user.delete');
+Route::apiResource('user', UserController::class);
+
+
+
+Route::get('/category', [CategoryController::class,'index'])->name('web.category.index');
+Route::get('/equipment', [EquipmentController::class,'index'])->name('web.equipment.index');
+
 

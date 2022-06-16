@@ -17,9 +17,10 @@ class userController extends Controller
     public function index()
     {
         try {
-            $user = User::all();
+            $user = User::paginate(10);
             // if ($user) 
-            return UserResource::collection($user);
+            return view('user',['data' => $user]);
+            // return UserResource::collection($user);
             // return response()->json(["Error" => "Empty"],400);
         }
         catch (Exception $e) {
@@ -107,14 +108,15 @@ class userController extends Controller
     {
         try {
             $user = User::find($id);
+            echo $user;
             if ($user) {
                 $user->delete();
-                return response()->json(["Successfully" => "Deleted "],200);
+                return redirect('/user')->with('success', 'User is successfully deleted');
             }
-            return response()->json(["Error" => "Empty"],400);
+            return redirect('/user')->with('failed', 'Not found user');
         }
         catch (Exception $e) {
-             return response()->json(["Error" => $e->getMessage()],400);
+            return redirect('/user')->with('failed',  $e->getMessage());
        }
     }
 }

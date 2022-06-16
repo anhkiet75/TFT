@@ -14,12 +14,15 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
         try {
-            $category = Category::all();
+            $category = Category::paginate(5);
             if ($category) 
-                return new CategoryResource($category);
+                return view('category',['data'=> $category]);
+                // return new CategoryResource($category);
             return response()->json(["Error" => "Empty"],400);
         }
         catch (Exception $e) {

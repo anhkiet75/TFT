@@ -34,9 +34,9 @@ Route::prefix('auth')->group(function(){
 });
 
 
-Route::middleware(['auth:api'])->group(function () {
-        Route::apiResource('equipment', EquipmentController::class);
-        Route::apiResource('category', CategoryController::class);
-        Route::apiResource('user', UserController::class);
-});
+// Route::middleware(['auth:api'])->group(function () {
+//         Route::apiResource('equipment', EquipmentController::class);
+//         Route::apiResource('category', CategoryController::class);
+//         Route::apiResource('user', UserController::class);
+// });
 
