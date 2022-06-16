@@ -13,10 +13,7 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('app');
-// });
-
-Route::view('/{any}', 'app')
-    ->where('any', '.*');
+Route::get('/', function () {
+    return view('app');
+});
 

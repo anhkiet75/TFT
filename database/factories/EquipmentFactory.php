@@ -20,7 +20,6 @@ class EquipmentFactory extends Factory
     public function definition()
     {
         return [
-            'serial_number' =>  $this->faker->numerify('##LCD#####'),
             'name' => $this->faker->name(),
             'status' => 'IN_USE',
             'description' => $this->faker->text(),

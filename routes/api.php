@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\UserController;
 use App\Models\Conversation;
 use App\Models\Equipment;
 
@@ -28,13 +30,13 @@ Route::prefix('auth')->group(function(){
         Route::post('register', 'register');
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
-        // Route::get('user/{user}', 'test');
     });
 });
 
 
 Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('equipment', EquipmentController::class);
-        Route::apiResource('category', EquipmentController::class);
+        Route::apiResource('category', CategoryController::class);
+        Route::apiResource('user', UserController::class);
 });
 

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Resources\EquipmentResource;
-use App\Models\Equipment;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Exception;
+use Illuminate\Http\Request;
 
-class EquipmentController extends Controller
+class userController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -17,10 +17,10 @@ class EquipmentController extends Controller
     public function index()
     {
         try {
-            $equipment = Equipment::latest()->get();
-            if ($equipment) 
-                return new EquipmentResource($equipment);
-            return response()->json(["Error" => "Empty"],400);
+            $user = User::all();
+            // if ($user) 
+            return UserResource::collection($user);
+            // return response()->json(["Error" => "Empty"],400);
         }
         catch (Exception $e) {
             return response()->json(["Error" => $e->getMessage()],400);
@@ -34,27 +34,20 @@ class EquipmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
+        // $request->validate([
+        //     'name' => 'required|max:255',
+        // ]);
         
-        $request->validate([
-            'name' => 'required|max:255',
-            'status' => 'required|max:255',
-            'description'  => 'required|max:255',
-            'user_id' => 'numeric|nullable',
-            'category_id' => 'required|numeric'
-        ]);
-        
-        $input = $request->only(
-            ['name', 'status', 'description', 'user_id', 'category_id']
-        );
+        // $input = $request->only('name');
 
-        try {
-            $equipment = Equipment::create($input);
-            return new EquipmentResource($equipment);
-        }
-        catch (Exception $e) {
-            return response()->json(["Error" => $e->getMessage()],400);
-        }
+        // try {
+        //     $user = User::create($input);
+        //     return new UserResource($user);
+        // }
+        // catch (Exception $e) {
+        //     return response()->json(["Error" => $e->getMessage()],400);
+        // }
     }
 
     /**
@@ -66,9 +59,9 @@ class EquipmentController extends Controller
     public function show($id)
     {
         try {
-            $equipment = Equipment::find($id);
-            if ($equipment) 
-                return new EquipmentResource($equipment);
+            $user = User::find($id);
+            if ($user) 
+                return new UserResource($user);
             return response()->json(["Error" => "Not found"],400);
         }
         catch (Exception $e) {
@@ -87,21 +80,15 @@ class EquipmentController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'status' => 'required|max:255',
-            'description'  => 'required|max:255',
-            'user_id' => 'numeric|nullable',
-            'category_id' => 'required|numeric'
         ]);
 
-        $input = $request->only(
-            ['name', 'status', 'description', 'user_id', 'category_id']
-        );
+        $input = $request->only('name','email','gender','birthdate');
 
         try {
-            $equipment = Equipment::find($id);
-            if ($equipment) {
-                $equipment->update($input);
-                return new EquipmentResource($equipment);
+            $user = User::find($id);
+            if ($user) {
+                $user->update($input);
+                return new UserResource($user);
             }
             return response()->json(["Error" => "Not found"],400);
         }
@@ -119,9 +106,9 @@ class EquipmentController extends Controller
     public function destroy($id)
     {
         try {
-            $equipment = Equipment::find($id);
-            if ($equipment) {
-                $equipment->delete();
+            $user = User::find($id);
+            if ($user) {
+                $user->delete();
                 return response()->json(["Successfully" => "Deleted "],200);
             }
             return response()->json(["Error" => "Empty"],400);

@@ -49,12 +49,15 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
+        
+        $input = $request->only(['name','email','password','gender','birthdate']);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'gender'   => 1
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+            'gender'   => $input['gender'],
+            'birthdate' => $input['birthdate']
         ]);
 
         $token = Auth::login($user);

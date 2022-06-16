@@ -4,18 +4,18 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
-window.Vue = require('vue').default;
+// window.Vue = require('vue').default;
 
-import Vuetify from "vuetify";
-import "vuetify/dist/vuetify.min.css";
-import routes from './routes';
-import VueRouter from 'vue-router'
-import Vue from "vue";
-Vue.use(VueRouter);
+// import Vuetify from "vuetify";
+// import "vuetify/dist/vuetify.min.css";
+// import routes from './routes';
+// import VueRouter from 'vue-router'
+// import Vue from "vue";
+// Vue.use(VueRouter);
 
-Vue.use(Vuetify);
+// Vue.use(Vuetify);
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,23 +28,23 @@ Vue.use(Vuetify);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('App', require('./components/App.vue').default);;
-Vue.component('user', require('./components/User').default);
+// Vue.component('App', require('./components/App.vue').default);;
+// Vue.component('user', require('./components/User').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import App from './components/App';
-const router = new VueRouter({
-    routes,
-    mode: 'history'
-});
+// import App from './components/App';
+// const router = new VueRouter({
+//     routes,
+//     mode: 'history'
+// });
 
-const app = new Vue({
-    el: '#app',
-    render: h => h(App),
-    router,
-    vuetify: new Vuetify()
-});
+// const app = new Vue({
+//     el: '#app',
+//     render: h => h(App),
+//     router,
+//     vuetify: new Vuetify()
+// });

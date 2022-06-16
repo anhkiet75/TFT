@@ -35,7 +35,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+        ]);
+        
+        $input = $request->only('name');
+
+        try {
+            $category = Category::create($input);
+            return new CategoryResource($category);
+        }
+        catch (Exception $e) {
+            return response()->json(["Error" => $e->getMessage()],400);
+        }
     }
 
     /**
@@ -46,7 +58,15 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $category = Category::find($id);
+            if ($category) 
+                return new CategoryResource($category);
+            return response()->json(["Error" => "Not found"],400);
+        }
+        catch (Exception $e) {
+             return response()->json(["Error" => $e->getMessage()],400);
+       }
     }
 
     /**
@@ -58,7 +78,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+        ]);
+
+        $input = $request->only('name');
+
+        try {
+            $category = Category::find($id);
+            if ($category) {
+                $category->update($input);
+                return new CategoryResource($category);
+            }
+            return response()->json(["Error" => "Not found"],400);
+        }
+        catch (Exception $e) {
+             return response()->json(["Error" => $e->getMessage()],400);
+       }
     }
 
     /**
@@ -69,6 +105,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $category = Category::find($id);
+            if ($category) {
+                $category->delete();
+                return response()->json(["Successfully" => "Deleted "],200);
+            }
+            return response()->json(["Error" => "Empty"],400);
+        }
+        catch (Exception $e) {
+             return response()->json(["Error" => $e->getMessage()],400);
+       }
     }
 }
