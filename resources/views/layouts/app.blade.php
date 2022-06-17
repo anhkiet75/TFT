@@ -34,7 +34,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script> -->
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"></script>
- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
   <!--Main Navigation-->
   <header>
@@ -76,7 +76,7 @@
           <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
         </form>
 
-        Right links
+      
         <ul class="navbar-nav ms-auto d-flex flex-row">
           <!-- Notification dropdown -->
           <li class="nav-item dropdown">
@@ -147,7 +147,8 @@
               </li>
             </ul>
           </li> -->
-
+          @auth
+  
           <!-- Avatar -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#"
@@ -158,9 +159,17 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">My profile</a></li>
               <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
           </li>
+          @endauth
+
+          @guest
+          <li>
+            chưa đăng nhập
+          </li>
+          @endguest
+
         </ul>
       </div>
       <!-- Container wrapper -->

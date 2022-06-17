@@ -89,12 +89,17 @@ class userController extends Controller
             $user = User::find($id);
             if ($user) {
                 $user->update($input);
-                return new UserResource($user);
+                // return new UserResource($user);
+                return redirect('/user')->with('success', 'User is successfully updated');
             }
-            return response()->json(["Error" => "Not found"],400);
+
+            return redirect('/user')->with('failed', 'Not found user');
+            // return response()->json(["Error" => "Not found"],400);
         }
         catch (Exception $e) {
-             return response()->json(["Error" => $e->getMessage()],400);
+            //  return response()->json(["Error" => $e->getMessage()],400);
+            return redirect('/user')->with('failed',  $e->getMessage());
+
        }
     }
 
