@@ -194,7 +194,7 @@
                 radios.filter('[value="0"]').attr('checked', true);
             } else {
                 radios.filter('[value="1"]').attr('checked', true);
-            }
+            }   
 
             let btnModelUpdate = $("#modalUpdate")
             let formUpdate = $('#formUpdate')

@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
+            $table->string('serial_number')->nullable();
             $table->string('name');
             $table->string('status');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();

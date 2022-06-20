@@ -23,6 +23,7 @@
 
       <!-- Custom styles -->
   <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="css/autocomplete.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
     crossorigin="anonymous"></script>
  
@@ -39,18 +40,28 @@
   <!--Main Navigation-->
   <header>
     <!-- Sidebar -->
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white" style="max-width:200px">
       <div class="position-sticky">
+        @auth
+        @if (Auth::user()->is_admin)
         <div class="list-group list-group-flush mx-3 mt-4">
-          <a href="/category" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <a href="/category" class="list-group-item list-group-item-action py-2 ripple
+          {{ Route::currentRouteNamed('web.category.index') ? 'active' : '' }}
+          " aria-current="true">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Category</span>
           </a>
-          <a href="/equipment" class="list-group-item list-group-item-action py-2 ripple">
+          <a href="/equipment" class="list-group-item list-group-item-action py-2 ripple
+          {{ Route::currentRouteNamed('web.equipment.index') ? 'active' : '' }}
+          ">
             <i class="fas fa-chart-area fa-fw me-3"></i><span>Equipment</span>
           </a>
-          <a href="/user" class="list-group-item list-group-item-action py-2 ripple"><i
+          <a href="/user" class="list-group-item list-group-item-action py-2 ripple
+          {{ Route::currentRouteNamed('web.user.index') ? 'active' : '' }}
+          "><i
               class="fas fa-users fa-fw me-3"></i><span>User</span></a>
         </div>
+        @endif
+        @endauth
       </div>
     </nav>
     <!-- Sidebar -->
@@ -66,8 +77,8 @@
         </button>
 
         <!-- Brand -->
-        <a class="navbar-brand" href="#">
-          <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="25" alt="" loading="lazy" />
+        <a class="navbar-brand" href="/">
+          <img src="https://picsum.photos/id/238/300/300" height="30" alt="" loading="lazy" />
         </a>
         <!-- Search form -->
         <form class="d-none d-md-flex input-group w-auto my-auto">
@@ -150,6 +161,7 @@
           @auth
   
           <!-- Avatar -->
+          <h6 class="mt-2">{{Auth::user()->name}}</h4>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#"
               id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -165,8 +177,13 @@
           @endauth
 
           @guest
-          <li>
-            chưa đăng nhập
+          <li class="d-flex">
+            <button class="btn btn-outline-primary me-1">
+              <a href="/index">Login</a>
+            </button> 
+            <button class="btn btn-outline-primary">
+              <a href="/register">Register</a>
+            </button> 
           </li>
           @endguest
 
@@ -180,7 +197,7 @@
 
      <!--Main layout-->
   <main style="margin-top: 58px">
-    <div class="container pt-4">
+    <div class="container-fluid pt-1 ma-0">
       @yield('content')
     </div>
   </main>

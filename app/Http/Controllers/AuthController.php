@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
@@ -29,18 +29,21 @@ class AuthController extends Controller
         $token = Auth::attempt($credentials);
 
         if (!$token) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
+            // return response()->json([
+            //     'status' => 'error',
+            //     'message' => 'Unauthorized',
+            // ], 401);
+            return redirect('/index')->with('error', 'Unauthorized');
         }
         // $token = Auth::user()->createToken('token')->plainTextToken;
 
         $user = Auth::user();
-        return response()->json([
-                'status' => 'success',
-                'user' => $user
-            ]);
+        return redirect('/')->with('success', 'You are loggin');
+
+        // return response()->json([
+        //         'status' => 'success',
+        //         'user' => $user
+        // ]);
     }
 
     public function register(Request $request){
@@ -48,8 +51,9 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
+            'gender' => 'required',
         ]);
-        
+         
         $input = $request->only(['name','email','password','gender','birthdate']);
 
         $user = User::create([
@@ -57,28 +61,29 @@ class AuthController extends Controller
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'gender'   => $input['gender'],
-            'birthdate' => $input['birthdate']
+            'birthdate' => '2000-2-2'
         ]);
 
-        $token = Auth::login($user);        
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
+        $user = new User;
+
+        $token = Auth::login($user);   
+        return redirect('/')->with('success', 'User created successfully');
+
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'User created successfully',
+        //     'user' => $user,
+        //     'authorisation' => [
+        //         'token' => $token,
+        //         'type' => 'bearer',
+        //     ]
+        // ]);
     }
 
     public function logout()
     {
         Auth::logout();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Successfully logged out',
-        ]);
+        return redirect('index')->with('success', 'Logged out');
     }
 
     public function refresh()

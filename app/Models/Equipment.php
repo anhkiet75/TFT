@@ -11,12 +11,15 @@ class Equipment extends Model
 
     protected $guarded = [];
 
-    public function users() {
-        return $this->hasMany(User::class,'user_id');
+    public function user() {
+        return $this->belongsTo(User::class,'user_id');
     }
 
-    public function categories() {
-        return $this->hasMany(Category::class,'user_id');
+    public function category() {
+        return $this->belongsTo(Category::class,'category_id');
     }
-
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'  
+    ];
 }
