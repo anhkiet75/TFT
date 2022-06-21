@@ -18,7 +18,7 @@
         {{ session()->get('failed') }}
     </div><br />
     @endif
-    <div class="d-flex align-items-end flex-column">
+    <div class="d-flex align-items-end flex-column mt-4">
         <div>
             <button type="button" class="btn btn-outline-primary btn-rounded button-create mb-2" data-mdb-toggle="modal" data-mdb-target="#createModal">
                 <i class="fa fa-2x fa-plus"></i>
@@ -26,6 +26,7 @@
             </button>
         </div>
     </div>
+
     <table class="table table-hover align-middle mb-0 bg-white">
         <thead class="bg-light">
 
@@ -77,8 +78,10 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label for="form4name" class="form-label">Name</label>
-                                <input type="text" id="form4name" class="form-control" name="name" />
+                                <label for="form-update-name" class="form-label">Name</label>
+                                <input type="text" id="form-update-name" class="form-control" name="name" />
+                                <label for="form-update-name" style="color:red"
+                                 class="form-label" id="label-form-update"></label>
                             </div>
 
                             <div class="modal-footer">
@@ -115,8 +118,9 @@
             </div>
         </div>
 
-           <!-- create modal -->
-           <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <!-- create modal -->
+
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -124,45 +128,66 @@
                         <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="post" id="formCreate">
+                        <form action="" method="post" class="needs-validation" id="formCreate" novalidate>
                             @csrf
                             <div class="form-group">
-                                <label for="form4name" class="form-label">Name</label>
-                                <input type="text" id="form4name" class="form-control" name="name" />
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger" id="modalCreate">Create</button>
+                                <label for="form-create-name" class="form-label">Name</label>
+                                <input type="text" id="form-create-name" class="form-control" name="name" />
+                                <label for="form-create-name" class="form-label" style="color:red" id="label-form-create-name"></label>
                             </div>
                         </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger" id="modalCreate">Create</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-
     </table>
-
 
     <div class="d-flex mt-2 flex-end">
         {!! $data->links() !!}
     </div>
+
+
+    <!-- <form action="" method="post" class="needs-validation" id="formCreate">
+        @csrf
+        <div class="form-group">
+            <label for="form4name" class="form-label">Name</label>
+            <input type="text" id="form4name" class="form-control" name="name" required />
+            <div class="invalid-feedback">
+                bad
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" id="modalCreate">Create</button>
+        </div>
+    </form> -->
+
+    <style>
+
+    </style>
+
     <script>
         const app = <?php echo json_encode($data); ?>;
         const btnUpdate = $('.button-update')
         btnUpdate.click(function() {
             var id = $(this).data('id');
             const data = app.data.find(element => element.id === id);
-            $('#form4name').val(data.name)
+            $('#form-update-name').val(data.name)
 
             let btnModelUpdate = $("#modalUpdate")
             let formUpdate = $('#formUpdate')
 
             btnModelUpdate.on("click", function(e) {
                 e.preventDefault();
-                formUpdate.attr('action', `/category/${id}`).submit();
+                label = $('#label-form-update')
+                name = $('#form-update-name').val()
+                if (name === "") label.text("The name field is required.")
+                else formUpdate.attr('action', `/category/${id}`).submit();
             });
         })
 
@@ -177,14 +202,15 @@
             })
         })
 
-        const btnCreate = $('.button-create')
-        btnCreate.click(function() {
-            let btnModelCreate = $("#modalCreate")
-            let formCreate = $("#formCreate")
-            btnModelCreate.on("click", function(e) {
-                e.preventDefault();
+        let formCreate = $("#formCreate")
+        let btnModelCreate = $("#modalCreate")
+        btnModelCreate.on("click", function(e) {
+            e.preventDefault();
+            label = $('#label-form-create-name')
+            name = $('#form-create-name').val()
+            if (name === "") label.text("The name field is required.")
+            else
                 formCreate.attr('action', `/category`).submit();
-            })
         })
     </script>
 </div>

@@ -47,19 +47,19 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {   
-        $request->validate([
-            'name' => 'required|max:255',
-            'status' => 'required|max:255',
-            'description'  => 'required|max:255',
-            'user_id' => 'nullable',
-            'category_id' => 'required'
-        ]);
-
-        $input = $request->only(
-            ['name', 'status', 'description', 'user_id', 'category_id']
-        );  
-         
+        
         try {
+            $request->validate([
+                'name' => 'required|max:255',
+                'status' => 'required|max:255',
+                'description'  => 'required|max:255',
+                'user_id' => 'nullable',
+                'category_id' => 'required'
+            ]);
+    
+            $input = $request->only(
+                ['name', 'status', 'description', 'user_id', 'category_id']
+            );  
             Equipment::create($input);
             // dd($input);
             // return new EquipmentResource($equipment);

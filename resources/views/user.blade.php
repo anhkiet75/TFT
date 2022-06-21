@@ -18,19 +18,19 @@
         {{ session()->get('failed') }}
     </div><br />
     @endif
-    <div class="d-flex align-items-end flex-column">
+    <!-- <div class="d-flex align-items-end flex-column">
         <div>
             <button type="button" class="btn btn-outline-primary btn-rounded button-create mb-2" data-mdb-toggle="modal" data-mdb-target="#createModal">
                 <i class="fa fa-2x fa-plus"></i>
                 <span style="font-size: 20px;">New</span>
             </button>
         </div>
-    </div>
-    <table class="table table-hover align-middle mb-0 bg-white">
+    </div> -->
+    <table class="table table-hover align-middle mb-0 mt-4  bg-white">
         <thead class="bg-light">
 
             <tr>
-                <th>ID</th>
+                <th>ID</th> 
                 <th>Name</th>
                 <th>Email</th>
                 <th>Gender</th>
@@ -147,7 +147,7 @@
         </div>
 
            <!-- create modal -->
-           <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+           <!-- <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -169,7 +169,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 

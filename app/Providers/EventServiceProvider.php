@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Equipment;
+use App\Observers\EquipmentObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -19,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
     ];
+
+    // protected $observers = [
+    //     Equipment::class => [EquipmentObserver::class],
+    // ];
 
     /**
      * Register any events for your application.

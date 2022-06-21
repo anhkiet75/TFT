@@ -18,7 +18,7 @@
       {{ session()->get('failed') }}
    </div><br />
    @endif
-   <div class="d-flex align-items-end flex-column">
+   <div class="d-flex align-items-end flex-column mt-4">
       <div>
          <button type="button" class="btn btn-outline-primary btn-rounded button-create mb-2" data-mdb-toggle="modal" data-mdb-target="#createModal">
             <i class="fa fa-2x fa-plus"></i>
@@ -31,6 +31,7 @@
 
          <tr>
             <th>ID</th>
+            <th>Serial Number</th>
             <th>Name</th>
             <th>Status</th>
             <th>Description</th>
@@ -48,6 +49,9 @@
          <tr>
             <td>
                <span>{{$item->id}}</span>
+            </td>
+            <td>
+               <p class="fw-normal mb-1">{{$item->serial_number}}</p>
             </td>
             <td>
                <p class="fw-normal mb-1">{{$item->name}}</p>
@@ -104,20 +108,7 @@
                   <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                  <!-- <form action="" method="post" id="formUpdate">
-                     @csrf
-                     @method('PUT')
-                     <div class="form-group">
-                        <label for="form4name" class="form-label">Name</label>
-                        <input type="text" id="form4name" class="form-control" name="name" />
-                     </div>
-
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="modalUpdate">Save</button>
-                     </div>
-                  </form> -->
-
+               
                   <form action="" method="post" id="formUpdate">
                    
 
@@ -126,6 +117,7 @@
                      <div class="form-group">
                         <label for="formUpdateName" class="form-label">Name</label>
                         <input type="text" id="formUpdateName" class="form-control" name="name" />
+                        <label for="formUpdateName" style="color:red" class="form-label" id="label-form-update"></label>
                      </div>
 
                      <div class="form-group">
@@ -140,6 +132,8 @@
                      <div class="form-group">
                         <label for="formUpdateDescription" class="form-label">Description</label>
                         <input type="text" id="formdesc" class="form-control formUpdateDescription" name="description" id="formUpdateDescription" />
+                        <label for="formUpdateDescription" style="color:red;"
+                        class="form-label" id="label-desc-form-update"></label>
                      </div>
 
                      <div class="form-group d-flex flex-column">
@@ -212,6 +206,7 @@
                      <div class="form-group">
                         <label for="form4name" class="form-label">Name</label>
                         <input type="text" id="form4name" class="form-control" name="name" />
+                        <label for="form4name" style="color:red" class="form-label" id="label-form-create"></label>
                      </div>
 
                      <div class="form-group">
@@ -225,16 +220,12 @@
 
                      <div class="form-group">
                         <label for="formdesc" class="form-label">Description</label>
-                        <input type="text" id="formdesc" class="form-control" name="description" />
+                        <input type="text" id="formdesc" class="form-control formCreateDescription" name="description" />
+                        <label for="formdesc" style="color:red" class="form-label" id="label-desc-form-create"></label>
                      </div>
 
                      <div class="form-group d-flex flex-column">
-                        <!-- <label for="formselect" class="form-label">User</label>
-                        <div class="autocomplete">
-                           <input id="userInput" type="text" name="user_id" class="form-control" placeholder="User"
-                           >
-                        </div> -->
-                        <!-- <input type="submit"> -->
+               
                         <label for="formselect" class="form-label">User</label>
 
                         <select class="form-select" id="formselect" aria-label="Default select example"
@@ -302,7 +293,14 @@
 
          btnModelUpdate.on("click", function(e) {
             e.preventDefault();
-            formUpdate.attr('action', `/equipment/${id}`).submit();
+                label = $('#label-form-update')
+                labelDesc =  $('#label-desc-form-update')
+                desc =  $('.formUpdateDescription').val()
+                name = $('#formUpdateName').val()
+                if (name === "") label.text("The name field is required.")
+                if (desc === "") labelDesc.text("The description field is required.")
+                if (name && desc)
+                   formUpdate.attr('action', `/equipment/${id}`).submit();
          });
       })
 
@@ -323,8 +321,16 @@
          let formCreate = $("#formCreate")
          btnModelCreate.on("click", function(e) {
             e.preventDefault();
-           
-            formCreate.prop('action', `/equipment`).submit();
+                label = $('#label-form-create')
+                labelDesc =  $('#label-desc-form-create')
+                desc =  $('.formCreateDescription').val()
+                name = $('#form4name').val()
+                console.log(desc)
+                console.log(name)
+                if (name === "") label.text("The name field is required.")
+                if (desc === "") labelDesc.text("The description field is required.")
+                if (name && desc)
+                    formCreate.prop('action', `/equipment`).submit();
          })
       })
 

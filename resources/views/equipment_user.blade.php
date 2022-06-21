@@ -20,6 +20,7 @@
 
          <tr>
             <th>ID</th>
+            <th>Serial Number</th>
             <th>Name</th>
             <th>Status</th>
             <th>Description</th>
@@ -36,6 +37,9 @@
          <tr>
             <td>
                <span>{{$item->id}}</span>
+            </td>
+            <td>
+               <p class="fw-normal mb-1">{{$item->serial_number}}</p>
             </td>
             <td>
                <p class="fw-normal mb-1">{{$item->name}}</p>

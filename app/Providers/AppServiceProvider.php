@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Equipment;
+use App\Observers\EquipmentObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        Equipment::observe(EquipmentObserver::class);
     }
 }

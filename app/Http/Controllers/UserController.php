@@ -79,13 +79,13 @@ class userController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-        ]);
-
-        $input = $request->only('name','email','gender','birthdate');
-
+        
         try {
+            $request->validate([
+                'name' => 'required|max:255',
+            ]);
+    
+            $input = $request->only('name','email','gender','birthdate');
             $user = User::find($id);
             if ($user) {
                 $user->update($input);

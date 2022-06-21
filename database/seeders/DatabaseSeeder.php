@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'birthdate' => '1990/07/05',
             'email' => 'anh@gmail.com',
             'password' => Hash::make('123456'),
-            'is_admin' => true
+            'is_admin' => false
         ]);
         // \App\Models\Category::factory(5)->create();
         DB::table('categories')->insert([

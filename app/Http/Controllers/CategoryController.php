@@ -39,13 +39,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-        ]);
-
-        $input = $request->only('name');
-
+        
         try {
+            $request->validate([
+                'name' => 'required|max:255',
+            ]);
+    
+            $input = $request->only('name');
             $category = Category::create($input);
             // return view('category', ['data' => $category, 'success' => 'Category is successfully created']);
             return redirect('/category')->with('success', 'Category is successfully created');
@@ -85,13 +85,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-        ]);
-
-        $input = $request->only('name');
-
+        
         try {
+            $request->validate([
+                'name' => 'required|max:255',
+            ]);
+    
+            $input = $request->only('name');
             $category = Category::find($id);
             if ($category) {
                 $category->update($input);
