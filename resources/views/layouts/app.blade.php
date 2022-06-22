@@ -81,7 +81,7 @@
         <!-- Brand -->
         <a class="navbar-brand" href="/">
           <img src="https://picsum.photos/id/238/300/300" height="30" alt="" loading="lazy" />
-          <h3 class="mt-1 ms-1">TMA</h3>
+          <h3 class="mt-1 ms-1">Web App</h3>
         </a>
         <!-- Search form -->
         <!-- <form class="d-none d-md-flex input-group w-auto my-auto">

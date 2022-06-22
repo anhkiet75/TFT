@@ -24,12 +24,13 @@ use Illuminate\Support\Facades\Auth;
 // })->name('home')->middleware('auth:web');
 
 Route::get('index', [AuthController::class,'index'])->name('index');
+Route::post('login', [AuthController::class,'login'])->name('login');
 Route::get('register',function() {
     return view('auth.register');
 })->name('register');
-Route::post('login', [AuthController::class,'login'])->name('login');
-Route::get('logout', [AuthController::class,'logout']);
 Route::post('register', [AuthController::class,'register'])->name('auth.register');
+
+Route::get('logout', [AuthController::class,'logout']);
 
 Route::middleware(['auth:web','admin'])->group(function (){
     Route::get('/', function () {

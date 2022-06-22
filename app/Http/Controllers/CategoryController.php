@@ -2,68 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CategoryResource;
-use App\Models\Category;
+use App\Http\Services\CategoryService;
 use Exception;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
+    protected $categoryService;
+
+    public function __construct(CategoryService $service)
+    {
+        $this->categoryService = $service;
+    }
 
     public function index()
     {
         try {
-            $category = Category::paginate(5);
-            if ($category) {
-                return view('category', ['data' => $category]);
-            }
-            // return response()->json(["Error" => "Empty"],400);
-            return redirect('/cetegory')->with('failed', "Empty");
+            $result = $this->categoryService->index();  
+            return view('category',[ 'data' => $result ]);
         } catch (Exception $e) {
-            // return response()->json(["Error" => $e->getMessage()],400);
             return redirect('/cetegory')->with('failed',  $e->getMessage());
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        
+        $data = $request->only('name');
+        $result['status'] = 'success';
+        $result['message'] = 'Created category';
         try {
-            $request->validate([
-                'name' => 'required|max:255',
-            ]);
-    
-            $input = $request->only('name');
-            $category = Category::create($input);
-            // return view('category', ['data' => $category, 'success' => 'Category is successfully created']);
-            return redirect('/category')->with('success', 'Category is successfully created');
-
-
-            // return new CategoryResource($category);
+            $result['data'] = $this->categoryService->saveCategory($data);
         } catch (Exception $e) {
-            // return response()->json(["Error" => $e->getMessage()],400);
-            return redirect('/category')->with('failed',  $e->getMessage());
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+                'data' => ''
+            ];
         }
+        return redirect('/category')
+            ->with($result['status'],$result['message'])
+            ->with('data',$result['data']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     // public function show($id)
     // {
     //     try {
@@ -76,56 +60,43 @@ class CategoryController extends Controller
     //     }
     // }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        
+        $data = $request->only('name');
+        $result['status'] = 'success';
+        $result['message'] = 'Updated category';
         try {
-            $request->validate([
-                'name' => 'required|max:255',
-            ]);
-    
-            $input = $request->only('name');
-            $category = Category::find($id);
-            if ($category) {
-                $category->update($input);
-                // return new CategoryResource($category);
-                return redirect('/category')->with('success', 'Category is successfully updated');
-            }
-            // return response()->json(["Error" => "Not found"],400);
-            return redirect('/category')->with('failed', 'Not found');
+            $result['data'] = $this->categoryService->updateCategory($id, $data);
         } catch (Exception $e) {
-            //  return response()->json(["Error" => $e->getMessage()],400);
-            return redirect('/category')->with('failed',  $e->getMessage());
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+                'data' => ''
+            ];
         }
+
+        return redirect('/category')
+            ->with($result['status'],$result['message'])
+            ->with('data',$result['data']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
+        $result['status'] = 'success';
+        $result['message'] = 'Deleted category';
         try {
-            $category = Category::find($id);
-            if ($category) {
-                $category->delete();
-                // return response()->json(["Successfully" => "Deleted "],200);
-                return redirect('/category')->with('success', 'Category is successfully deleted');
-            }
-            // return response()->json(["Error" => "Empty"],400);
-            return redirect('/category')->with('success', 'Category is successfully updated');
+            $result['data'] = $this->categoryService->destroyCategory($id);
         } catch (Exception $e) {
-            //  return response()->json(["Error" => $e->getMessage()],400);
-            return redirect('/category')->with('failed',  $e->getMessage());
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+                'data' => ''
+            ];
         }
+
+        return redirect('/category')
+            ->with($result['status'],$result['message'])
+            ->with('data',$result['data']);
     }
 }

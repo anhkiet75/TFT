@@ -6,18 +6,26 @@ use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 use App\Http\Resources\EquipmentResource;
 use App\Http\Resources\UserResource;
+use App\Http\Services\CategoryService;
 use App\Models\Category;
 use App\Models\Equipment;
 use App\Models\User;
 use Exception;
+use App\Http\Services\EquipmentService;
+
 
 class EquipmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    protected $equipmentService;
+    protected $categoryService;
+    protected $username;
+
+    public function __construct(EquipmentService $service)
+    {
+        $this->equipmentService = $service;
+    }
+
     public function index()
     {
         try {
@@ -28,13 +36,9 @@ class EquipmentController extends Controller
                     'user' => UserResource::collection(User::all()),
                     'category' => CategoryResource::collection(Category::all())
                 ]);
-                // return new EquipmentResource($equipment);
-            // return response()->json(["Error" => "Empty"],400);
             return redirect('/equipment')->with('failed', 'Empty');
-
         }
         catch (Exception $e) {
-            // return response()->json(["Error" => $e->getMessage()],400);
             return redirect('/equipment')->with('failed', $e->getMessage());
         }
     }
@@ -47,28 +51,22 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {   
-        
+        $result['status'] = 'success';
+        $result['message'] = 'Created Equipment';
+        $data = $request->only(
+            ['name', 'status', 'description', 'user_id', 'category_id']
+        );  
         try {
-            $request->validate([
-                'name' => 'required|max:255',
-                'status' => 'required|max:255',
-                'description'  => 'required|max:255',
-                'user_id' => 'nullable',
-                'category_id' => 'required'
-            ]);
-    
-            $input = $request->only(
-                ['name', 'status', 'description', 'user_id', 'category_id']
-            );  
-            Equipment::create($input);
-            // dd($input);
-            // return new EquipmentResource($equipment);
-            return redirect('/equipment')->with('success', 'Equipment is successfully created');
+            $result['data'] = $this->equipmentService->saveEquipment($data);
         }
         catch (Exception $e) {
-            // return response()->json(["Error" => $e->getMessage()],400);
-            return redirect('/equipment')->with('failed', $e->getMessage());
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ];
         }
+        return redirect('/equipment')
+            ->with($result['status'],$result['message']);
     }
 
     /**
@@ -86,12 +84,10 @@ class EquipmentController extends Controller
                     'data' => EquipmentResource::collection($equipment),
                     'username' => User::find($id)->name
                 ]);
-            return redirect('/equipment_user')->with('failed', 'Not found');
-            // return response()->json(["Error" => "Not found"],400);            
+            return redirect('/equipment_user')->with('failed', 'Not found');          
         }
         catch (Exception $e) {
             return redirect('/equipment')->with('failed', $e->getMessage());
-            // return response()->json(["Error" => $e->getMessage()],400);
        }
     }
 
@@ -104,35 +100,24 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'status' => 'required|max:255',
-            'description'  => 'required|max:255',
-            'user_id' => 'nullable',
-            'category_id' => 'required'
-        ]);
-
-        $input = $request->only(
+        $result['status'] = 'success';
+        $result['message'] = 'Updated Equipment';
+        $data = $request->only(
             ['name', 'status', 'description', 'user_id', 'category_id']
-        );
-
+        );  
         try {
-            $equipment = Equipment::findOrFail($id);
-            if ($equipment) {
-                $equipment->update($input);
-                // return new EquipmentResource($equipment);
-            return redirect('/equipment')->with('success', 'Equipment is successfully updated');
-
-            }
-            // return response()->json(["Error" => "Not found"],400);
-            return redirect('/equipment')->with('error', 'Not found');
-
+            $result['data'] = $this->equipmentService->updateEquipment($id,$data);
         }
         catch (Exception $e) {
-            //  return response()->json(["Error" => $e->getMessage()],400);
-            return redirect('/equipment')->with('success',  $e->getMessage());
-
-       }
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+                'data' => ''
+            ];
+        }
+        return redirect('/equipment')
+            ->with($result['status'],$result['message'])
+            ->with('data',$result['data']);
     }
 
     /**
@@ -143,21 +128,20 @@ class EquipmentController extends Controller
      */
     public function destroy($id)
     {
+        $result['status'] = 'success';
+        $result['message'] = 'Deleted category';
         try {
-            $equipment = Equipment::findOrFail($id);
-            if ($equipment) {
-                $equipment->delete();
-                // return response()->json(["Successfully" => "Deleted "],200);
-            return redirect('/equipment')->with('success', 'Equipment is successfully deleted');
-
-            }
-            // return response()->json(["Error" => "Empty"],400);
-            return redirect('/equipment')->with('error', 'Not found');
-
+            $result['data'] = $this->equipmentService->destroyEquipment($id);
+        } catch (Exception $e) {
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+                'data' => ''
+            ];
         }
-        catch (Exception $e) {
-             return response()->json(["Error" => $e->getMessage()],400);
-             return redirect('/equipment')->with('success',  $e->getMessage());
-       }
+
+        return redirect('/equipment')
+            ->with($result['status'],$result['message'])
+            ->with('data',$result['data']);
     }
 }

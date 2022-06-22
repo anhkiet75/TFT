@@ -2,17 +2,14 @@
 
 @section('content')
 <div class="container d-flex flex-column">
-    <!-- @if(isset($success))
-    <div class="alert alert-success">
-        {{ $success }} 
-    </div><br />
-    @endif -->
-
+  
+    
     @if(session()->get('success'))
     <div class="alert alert-success">
         {{ session()->get('success') }}
     </div><br />
     @endif
+
     @if(session()->get('failed'))
     <div class="alert alert-danger">
         {{ session()->get('failed') }}
@@ -187,7 +184,8 @@
                 label = $('#label-form-update')
                 name = $('#form-update-name').val()
                 if (name === "") label.text("The name field is required.")
-                else formUpdate.attr('action', `/category/${id}`).submit();
+                else 
+                formUpdate.attr('action', `/category/${id}`).submit();
             });
         })
 

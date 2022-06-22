@@ -19,6 +19,6 @@ class EnsureIsOwner
     {
         if ($request->id == Auth::id() || Auth::user()->is_admin)
             return $next($request);
-        return redirect('/');
+        return redirect('/')->with('failed', "You don't have permission to access this page");
     }
 }

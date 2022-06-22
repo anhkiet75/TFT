@@ -21,6 +21,6 @@ class EnsureIsAdmin
             return $next($request);
         }
         $id = Auth::id();
-        return redirect('/equipment_user/' . $id);
+        return redirect('/equipment_user/' . $id)->with('failed', "You don't have permission to access this page");
     }
 }

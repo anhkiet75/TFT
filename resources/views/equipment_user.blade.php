@@ -7,6 +7,7 @@
       {{ session()->get('success') }}
    </div><br />
    @endif
+   
    @if(session()->get('failed'))
    <div class="alert alert-danger">
       {{ session()->get('failed') }}
