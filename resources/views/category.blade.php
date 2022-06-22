@@ -25,7 +25,7 @@
     </div>
 
     <table class="table table-hover align-middle mb-0 bg-white">
-        <thead class="bg-light">
+        <thead class="bg-light  table-dark">
 
             <tr>
                 <th>ID</th>

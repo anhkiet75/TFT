@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 
 
@@ -25,6 +26,10 @@ class CategoryRepository
 
     public function index(){
         return $this->category->paginate(5);
+    }
+
+    public function getAll() {
+        return CategoryResource::collection($this->category->all());
     }
     /**
      * Save Category

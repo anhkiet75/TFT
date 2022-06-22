@@ -26,6 +26,17 @@ class EquipmentService
         return $this->equipmentRepository->index();
     }
 
+    public function getAllEquipment()
+    {
+        return $this->equipmentRepository->getAll();
+    }
+
+
+    public function findOne($id)
+    {
+        return $this->equipmentRepository->getById($id);
+    }
+
    
     public function updateEquipment($id, $data)
     {

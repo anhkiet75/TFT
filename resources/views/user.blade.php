@@ -27,7 +27,7 @@
         </div>
     </div> -->
     <table class="table table-hover align-middle mb-0 mt-4  bg-white">
-        <thead class="bg-light">
+        <thead class="bg-light  table-dark">
 
             <tr>
                 <th>ID</th> 
@@ -46,7 +46,10 @@
                     <span>{{$item->id}}</span>
                 </td>
                 <td>
-                    <p class="fw-normal mb-1">{{$item->name}}</p>
+                    <!-- <p class="fw-normal mb-1">{{$item->name}}</p> -->
+                    <a href="/equipment_user/{{$item->id}}">
+                      <p class="fw-normal mb-1"> {{ $item->name }}</p>
+                   </a>
                 </td>
                 <td>
                     <p class="fw-normal mb-1">{{$item->email}}</p>
@@ -100,7 +103,6 @@
                                 <input type="text" id="form4email" class="form-control" name="email" />
                             </div>
 
-                            
                             <label for="inlineRadio1" class="form-label">Gender</label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="0" />

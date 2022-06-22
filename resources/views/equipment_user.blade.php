@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-flex flex-column">
+<div class="container d-flex flex-column mt-2">
    @if(session()->get('success'))
    <div class="alert alert-success">
       {{ session()->get('success') }}
@@ -17,7 +17,7 @@
    </div>
    <h3>Equipment for user: {{$username}}</h3>
    <table class="table table-hover align-middle mb-0 bg-white">
-      <thead class="bg-light">
+      <thead class="bg-light  table-dark">
 
          <tr>
             <th>ID</th>

@@ -38,8 +38,9 @@ class AuthController extends Controller
         // $token = Auth::user()->createToken('token')->plainTextToken;
 
         $user = Auth::user();
-        return redirect('/')->with('success', 'You are loggin');
-
+        if ($user->is_admin)
+            return redirect('/')->with('success', 'You are loggin');
+        return redirect('/equipment_user/' . $user->id)->with('success', 'You are loggin');
         // return response()->json([
         //         'status' => 'success',
         //         'user' => $user

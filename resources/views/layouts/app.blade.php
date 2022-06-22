@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Laravel</title>
 
-
     <!-- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
@@ -83,12 +82,7 @@
           <img src="https://picsum.photos/id/238/300/300" height="30" alt="" loading="lazy" />
           <h3 class="mt-1 ms-1">Web App</h3>
         </a>
-        <!-- Search form -->
-        <!-- <form class="d-none d-md-flex input-group w-auto my-auto">
-          <input autocomplete="off" type="search" class="form-control rounded"
-            placeholder='Search (ctrl + "/" to focus)' style="min-width: 225px" />
-          <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
-        </form> -->
+      
 
       
         <ul class="navbar-nav ms-auto d-flex flex-row">

@@ -2,11 +2,7 @@
 
 @section('content')
 <div class="container-fluid d-flex flex-column">
-   <!-- @if(isset($success))
-    <div class="alert alert-success">
-        {{ $success }} 
-    </div><br />
-    @endif -->
+
 
    @if(session()->get('success'))
    <div class="alert alert-success">
@@ -54,61 +50,56 @@
          </tr>
       </thead>
       <tbody>
-
-         @foreach ($data as $item)
-
-
          <tr>
             <td>
-               <span>{{$item->id}}</span>
+               <span>{{$data->id}}</span>
             </td>
             <td>
-               <p class="fw-normal mb-1">{{$item->serial_number}}</p>
+               <p class="fw-normal mb-1">{{$data->serial_number}}</p>
             </td>
             <td>
-               <p class="fw-normal mb-1">{{$item->name}}</p>
+               <p class="fw-normal mb-1">{{$data->name}}</p>
             </td>
             <td>
-               <p class="fw-normal mb-1">{{$item->status}}</p>
+               <p class="fw-normal mb-1">{{$data->status}}</p>
             </td>
             <td>
-               <p class="fw-normal mb-1">{{$item->description}}</p>
+               <p class="fw-normal mb-1">{{$data->description}}</p>
             </td>
             <td>
-               @if (isset($item->user->name))
-               <a href="/equipment_user/{{$item->user->id}}">
-                  <p class="fw-normal mb-1"> {{ $item->user->name }}</p>
+               @if (isset($data->user->name))
+               <a href="/equipment_user/{{$data->user->id}}">
+                  <p class="fw-normal mb-1"> {{ $data->user->name }}</p>
                </a>
                @else
                <p class="fw-normal mb-1 " style="color: #eb4f34;">Not assigned</p>
                @endif
-               <!-- <p class="fw-normal mb-1"> {{ isset($item->user->name) ? $item->user->name : 'Not assigned' }}</p> -->
+               <!-- <p class="fw-normal mb-1"> {{ isset($data->user->name) ? $data->user->name : 'Not assigned' }}</p> -->
             </td>
             <td>
-               <p class="fw-normal mb-1">{{$item->category->name}}</p>
+               <p class="fw-normal mb-1">{{$data->category->name}}</p>
             </td>
             <td>
-               <p class="fw-normal mb-1">{{$item->created_at->format('d/m/Y H:i')}}</p>
+               <p class="fw-normal mb-1">{{$data->created_at->format('d/m/Y H:i')}}</p>
             </td>
             <td>
-               <p class="fw-normal mb-1">{{$item->updated_at->format('d/m/Y H:i')}}</p>
+               <p class="fw-normal mb-1">{{$data->updated_at->format('d/m/Y H:i')}}</p>
             </td>
             <td class="">
 
                <!-- Button trigger Update modal -->
-               <button type="button" class="btn btn-outline btn-rounded button-update px-4 mb-2 " data-mdb-toggle="modal" data-mdb-target="#updateModal" data-id="{{$item->id}}">
+               <button type="button" class="btn btn-outline btn-rounded button-update px-4 mb-2 " data-mdb-toggle="modal" data-mdb-target="#updateModal" data-id="{{$data->id}}">
                   <i class="far fa-edit fa-fw editor" style="color: #00a0f0"></i>
                   Update
                </button>
                <!-- Button trigger Delete  modal -->
-               <button type="button" class="btn btn-outline btn-rounded button-delete px-4" data-mdb-toggle="modal" data-mdb-target="#deleteModal" data-id="{{$item->id}}">
+               <button type="button" class="btn btn-outline btn-rounded button-delete px-4" data-mdb-toggle="modal" data-mdb-target="#deleteModal" data-id="{{$data->id}}">
                   <i class="fas fa-minus-circle" style="color: #f00000"></i>
                   Delete
                </button>
             </td>
          </tr>
 
-         @endforeach
       </tbody>
 
       <!-- update modal -->
@@ -268,11 +259,7 @@
 
    </table>
 
-   @if ($data->links())
-   <div class="d-flex mt-2 flex-end">
-      {!! $data->links() !!}
-   </div>
-   @endif
+  
 
    <script src="/js/autocomplete.js"></script>
 
@@ -286,9 +273,7 @@
       const btnUpdate = $('.button-update')
       btnUpdate.click(function() {
          var id = $(this).data('id');
-         console.log(id)
-         const data = app.data.find(element => element.id == id);
-         console.log(data)
+         const data = app;
          $('#formUpdateName').val(data.name)
          $('#formUpdateStatus').val('In-use')
          $('.formUpdateDescription').val(data.description)
@@ -341,10 +326,6 @@
          })
       })
 
-      // users = user.map(function (e) {
-      //    return e.name + " (ID: " + e.id + ")"
-      // })
-      // console.log(users)
    </script>
 
 

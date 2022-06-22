@@ -47,6 +47,7 @@ Route::middleware(['auth:web','admin'])->group(function (){
     Route::put('/category/{category}', [CategoryController::class,'update'])->name('web.category.update');
     
     Route::get('/equipment', [EquipmentController::class,'index'])->name('web.equipment.index');
+    Route::get('/equipment/search/', [EquipmentController::class,'findOne'])->name('web.equipment.find');
     Route::post('/equipment', [EquipmentController::class,'store'])->name('web.equipment.store');
     Route::delete('/equipment/{equipment}', [EquipmentController::class,'destroy'])->name('web.equipment.destroy');
     Route::patch('/equipment/{equipment}', [EquipmentController::class,'update'])->name('web.equipment.update');

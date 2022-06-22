@@ -39,13 +39,11 @@ class CategoryController extends Controller
         } catch (Exception $e) {
             $result = [
                 'status' => 'failed',
-                'message' => $e->getMessage(),
-                'data' => ''
+                'message' => $e->getMessage(),  
             ];
         }
         return redirect('/category')
-            ->with($result['status'],$result['message'])
-            ->with('data',$result['data']);
+            ->with($result['status'],$result['message']);
     }
 
     // public function show($id)
@@ -72,13 +70,11 @@ class CategoryController extends Controller
             $result = [
                 'status' => 'failed',
                 'message' => $e->getMessage(),
-                'data' => ''
             ];
         }
 
         return redirect('/category')
-            ->with($result['status'],$result['message'])
-            ->with('data',$result['data']);
+            ->with($result['status'],$result['message']);
     }
 
     public function destroy($id)
@@ -90,13 +86,11 @@ class CategoryController extends Controller
         } catch (Exception $e) {
             $result = [
                 'status' => 'failed',
-                'message' => $e->getMessage(),
-                'data' => ''
+                'message' => $e->getMessage()
             ];
         }
 
         return redirect('/category')
-            ->with($result['status'],$result['message'])
-            ->with('data',$result['data']);
+            ->with($result['status'],$result['message']);
     }
 }

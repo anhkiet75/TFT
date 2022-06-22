@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Resources\EquipmentResource;
 use App\Models\Equipment;
 
 
@@ -16,7 +17,19 @@ class EquipmentRepository
     }
 
     public function index(){
-      
+        return $this->equipment->paginate(10);
+    }
+
+    public function getAll() {
+        return EquipmentResource::collection($this->equipment->all());
+    }
+
+    public function getById($id) {
+        $findID  = $this->equipment->find($id);
+        $findSN = $this->equipment->where('serial_number', $id)->first();
+        if ($findID) return $findID;
+        if ($findSN) return $findSN;
+        return "";
     }
 
 

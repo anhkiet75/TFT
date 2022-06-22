@@ -26,6 +26,11 @@ class CategoryService
         return $this->categoryRepository->index();
     }
 
+    public function getAllCategory()
+    {
+        return $this->categoryRepository->getAll();
+    }
+
    
     public function updateCategory($id, $data)
     {

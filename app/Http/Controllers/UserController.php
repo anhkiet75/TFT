@@ -3,28 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Services\UserService;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
-class userController extends Controller
+class UserController extends Controller
 {
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $userService;
+
+    public function __construct(UserService $service)
+    {
+        $this->userService = $service;
+    }
+
     public function index()
     {
         try {
-            $user = User::paginate(10);
-            // if ($user) 
-            return view('user',['data' => $user]);
-            // return UserResource::collection($user);
-            // return response()->json(["Error" => "Empty"],400);
-        }
-        catch (Exception $e) {
-            return response()->json(["Error" => $e->getMessage()],400);
+            $result = $this->userService->index();  
+            return view('user',[ 'data' => $result ]);
+        } catch (Exception $e) {
+            return redirect('/user')->with('failed',  $e->getMessage());
         }
     }
 
@@ -57,18 +56,18 @@ class userController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        try {
-            $user = User::find($id);
-            if ($user) 
-                return new UserResource($user);
-            return response()->json(["Error" => "Not found"],400);
-        }
-        catch (Exception $e) {
-             return response()->json(["Error" => $e->getMessage()],400);
-       }
-    }
+    // public function show($id)
+    // {
+    //     try {
+    //         $user = User::find($id);
+    //         if ($user) 
+    //             return new UserResource($user);
+    //         return response()->json(["Error" => "Not found"],400);
+    //     }
+    //     catch (Exception $e) {
+    //          return response()->json(["Error" => $e->getMessage()],400);
+    //    }
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -80,27 +79,22 @@ class userController extends Controller
     public function update(Request $request, $id)
     {
         
+        $result['status'] = 'success';
+        $result['message'] = 'Updated User';
+        $data = $request->only(
+            ['name', 'email', 'gender', 'birthdate']
+        );  
         try {
-            $request->validate([
-                'name' => 'required|max:255',
-            ]);
-    
-            $input = $request->only('name','email','gender','birthdate');
-            $user = User::find($id);
-            if ($user) {
-                $user->update($input);
-                // return new UserResource($user);
-                return redirect('/user')->with('success', 'User is successfully updated');
-            }
-
-            return redirect('/user')->with('failed', 'Not found user');
-            // return response()->json(["Error" => "Not found"],400);
+            $this->userService->updateUser($id,$data);
         }
         catch (Exception $e) {
-            //  return response()->json(["Error" => $e->getMessage()],400);
-            return redirect('/user')->with('failed',  $e->getMessage());
-
-       }
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ];
+        }
+        return redirect('/user')
+            ->with($result['status'],$result['message']);
     }
 
     /**
@@ -111,17 +105,18 @@ class userController extends Controller
      */
     public function destroy($id)
     {
+        $result['status'] = 'success';
+        $result['message'] = 'Deleted User';
         try {
-            $user = User::find($id);
-            echo $user;
-            if ($user) {
-                $user->delete();
-                return redirect('/user')->with('success', 'User is successfully deleted');
-            }
-            return redirect('/user')->with('failed', 'Not found user');
+            $this->userService->destroyUser($id);
+        } catch (Exception $e) {
+            $result = [
+                'status' => 'failed',
+                'message' => $e->getMessage()
+            ];
         }
-        catch (Exception $e) {
-            return redirect('/user')->with('failed',  $e->getMessage());
-       }
+
+        return redirect('/user')
+            ->with($result['status'],$result['message']);
     }
 }
