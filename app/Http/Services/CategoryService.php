@@ -49,7 +49,7 @@ class CategoryService
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
-            throw new InvalidArgumentException('Unable to update ca data');
+            throw new InvalidArgumentException('Unable to update category');
         }
         DB::commit();
         return $category;

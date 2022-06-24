@@ -109,7 +109,7 @@
           @guest
           <li class="d-flex">
             <button class="btn btn-outline-primary me-1">
-              <a href="/index">Login</a>
+              <a href="/login">Login</a>
             </button> 
             <button class="btn btn-outline-primary">
               <a href="/register">Register</a>

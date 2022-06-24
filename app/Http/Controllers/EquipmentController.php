@@ -13,6 +13,8 @@ use App\Models\User;
 use Exception;
 use App\Http\Services\EquipmentService;
 use App\Http\Services\UserService;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\DB;
 use Laravel\Ui\Presets\React;
 
 class EquipmentController extends Controller
@@ -26,7 +28,8 @@ class EquipmentController extends Controller
         EquipmentService $equipmentService,
         CategoryService $categoryService,
         UserService $userSerivce
-    ) {
+    ) 
+    {
         $this->equipmentService = $equipmentService;
         $this->userService = $userSerivce;
         $this->categoryService = $categoryService;
@@ -39,32 +42,41 @@ class EquipmentController extends Controller
             $user = $this->userService->getAllUser();
             $category = $this->categoryService->getAllCategory();
             if ($equipment)
-            return view('equipment', [
-                'data' => $equipment,
-                'user' => $user,
-                'category' => $category
-            ]);
+                return view('equipment', [
+                    'data' => $equipment,
+                    'user' => $user,
+                    'category' => $category
+                ]);
             return redirect('/equipment')->with('failed', 'Empty');
         } catch (Exception $e) {
             return redirect('/equipment')->with('failed', $e->getMessage());
         }
     }
 
-    public function findOne(Request $request)
+    public function search(Request $request)
     {
-        try {
-            $equipment = $this->equipmentService->findOne($request->id);
+        if ($request->ajax()) {
+            $equipment = $this->equipmentService->search($request->search);
             $user = $this->userService->getAllUser();
             $category = $this->categoryService->getAllCategory();
-            if ($equipment)
-                return view('equipment_search', [
+            if ($equipment) {
+                $view = view('equipment_search', [
                     'data' => $equipment,
                     'user' => $user,
                     'category' => $category
-                ]);
-            return redirect('/equipment')->with('failed', 'Not found ID or Serial Number');
-        } catch (Exception $e) {
-            return redirect('/equipment')->with('failed', $e->getMessage());
+                ])->render();
+                return response()->json($view);
+            }
+            return response()->json(['error', 'Not found']);
+        }
+    }
+
+    public function livesearch(Request $request)
+    {
+        if ($request->ajax()) {
+            $equipment = $this->equipmentService->livesearch($request->search);
+            if (!$equipment) return back()->withError("error", "Not found");
+            return response()->json($equipment);
         }
     }
 

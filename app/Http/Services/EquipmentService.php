@@ -32,9 +32,15 @@ class EquipmentService
     }
 
 
-    public function findOne($id)
+    public function search($string)
     {
-        return $this->equipmentRepository->getById($id);
+        if ($string == "") return $this->equipmentRepository->getAll(); // If string is empty return all equipment
+        return $this->equipmentRepository->find($string);
+    }
+
+    public function livesearch($string) {
+        $equipment = $this->equipmentRepository->livesearch($string);
+        return $equipment;
     }
 
    
@@ -60,7 +66,7 @@ class EquipmentService
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
-            throw new InvalidArgumentException('Unable to update ca data');
+            throw new InvalidArgumentException('Unable to update equipment');
         }
         DB::commit();
 
@@ -111,5 +117,4 @@ class EquipmentService
         DB::commit();
         return $equipment;
     }
-
 }

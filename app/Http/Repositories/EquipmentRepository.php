@@ -4,16 +4,18 @@ namespace App\Http\Repositories;
 
 use App\Http\Resources\EquipmentResource;
 use App\Models\Equipment;
-
+use App\Models\User;
 
 class EquipmentRepository
 {
    
     protected $equipment;
+    protected $user;
 
-    public function __construct(Equipment $equipment)
+    public function __construct(Equipment $equipment, User $user)
     {
         $this->equipment = $equipment;
+        $this->user = $user;
     }
 
     public function index(){
@@ -24,12 +26,20 @@ class EquipmentRepository
         return EquipmentResource::collection($this->equipment->all());
     }
 
-    public function getById($id) {
-        $findID  = $this->equipment->find($id);
-        $findSN = $this->equipment->where('serial_number', $id)->first();
-        if ($findID) return $findID;
-        if ($findSN) return $findSN;
-        return "";
+    public function find($string) {
+        // ->join('users','user_id', '=', 'users.id')
+        // ->orWhere('users.id','like','%' . $string . '%')
+        $equipment = $this->equipment->where('serial_number','like','%' . strtoupper($string) . '%')
+                                     ->orWhere('id','like','%' . $string . '%')
+                                     ->orWhere('name', 'like', '%' . $string . '%')
+                                     ->orWhere('description', 'like', '%' . $string . '%')
+                                     ->paginate(10);
+        return $equipment;
+    }
+
+    public function livesearch($string) {
+        $equipment = $this->user->where('name', 'LIKE', '%' . $string . "%")->get();
+        return $equipment;
     }
 
 

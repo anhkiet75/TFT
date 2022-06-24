@@ -21,7 +21,7 @@ class EquipmentFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'status' => 'IN_USE',
+            'status' => 'In-use',
             'description' => $this->faker->text(),
             'user_id'  => FactoryHelper::getRandomModelId(User::class),
             'category_id'  => FactoryHelper::getRandomModelId(Category::class),

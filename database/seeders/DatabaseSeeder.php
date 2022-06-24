@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Headset']
         ]);
 
-        \App\Models\Equipment::factory(10)->create();
+        \App\Models\Equipment::factory(100)->create();
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
