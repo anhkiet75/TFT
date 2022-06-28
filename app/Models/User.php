@@ -22,7 +22,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
-    public function equiptments() {
+    public function equiptments()
+    {
         return $this->hasMany(Equiptment::class);
     }
 
@@ -65,5 +66,5 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-  
+
 }

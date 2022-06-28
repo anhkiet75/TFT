@@ -48,6 +48,7 @@ class CategoryRepository
     /**
      * Update Category
      *
+     * @param $id
      * @param $data
      * @return Category
      */
@@ -62,7 +63,7 @@ class CategoryRepository
     /**
      * Update Category
      *
-     * @param $data
+     * @param $id
      * @return Category
      */
     public function destroy($id)

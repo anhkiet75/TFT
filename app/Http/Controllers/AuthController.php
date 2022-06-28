@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTFactory;
+use Illuminate\Support\Str;
+
 class AuthController extends Controller
 {
 
@@ -18,33 +22,30 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request) 
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);
 
         if (!$token) {
-            // return response()->json([
-            //     'status' => 'error',
-            //     'message' => 'Unauthorized',
-            // ], 401);
             return redirect('/index')->with('error', 'Unauthorized');
         }
-        // $token = Auth::user()->createToken('token')->plainTextToken;
-
         $user = Auth::user();
+        $customClaims = ['sub' => $user->id, 'role'=> $user->is_admin];
+        $jwttoken = JWTAuth::fromUser($user);
+        // $jwttoken = JWTAuth::attempt($credentials);
+        // $jwttoken = JWTAuth::encode($payload);
+        // $jwttoken = auth('api')->attempt($credentials);
+
         if ($user->is_admin)
-            return redirect('/')->with('success', 'You are loggin');
-        return redirect('/equipment_user/' . $user->id)->with('success', 'You are loggin');
-        // return response()->json([
-        //         'status' => 'success',
-        //         'user' => $user
-        // ]);
+            return redirect('/')->with('success', 'You are login')->withCookie('jwt',$jwttoken);
+        return redirect('/equipment_user/' . $user->id)->with('success', 'You are login');
     }
 
     public function register(Request $request){
@@ -54,7 +55,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
             'gender' => 'required',
         ]);
-         
+
         $input = $request->only(['name','email','password','gender','birthdate']);
 
         $user = User::create([
@@ -67,18 +68,8 @@ class AuthController extends Controller
 
         $user = new User;
 
-        $token = Auth::login($user);   
+        $token = Auth::login($user);
         return redirect('/')->with('success', 'User created successfully');
-
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'User created successfully',
-        //     'user' => $user,
-        //     'authorisation' => [
-        //         'token' => $token,
-        //         'type' => 'bearer',
-        //     ]
-        // ]);
     }
 
     public function logout()

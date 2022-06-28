@@ -6,7 +6,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\UserController;
-use App\Models\Conversation;
 use App\Models\Equipment;
 
 /*
@@ -40,3 +39,7 @@ use App\Models\Equipment;
 //         Route::apiResource('user', UserController::class);
 // });
 
+// Route::middleware('jwt')->group(function () {
+    Route::get('/equipment/search/', [EquipmentController::class,'search'])->name('web.equipment.search')->middleware('jwt');
+    Route::get('/equipment/livesearch/', [EquipmentController::class,'livesearch'])->name('web.equipment.livesearch')->middleware('jwt');
+// });

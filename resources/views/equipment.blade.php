@@ -360,7 +360,7 @@
          })
          $.ajax({
             type: 'get',
-            url: '{{URL::to("/equipment/search")}}',
+            url: '{{URL::to("/api/equipment/search")}}',
             data: {
                'search': $value
             },
@@ -382,7 +382,7 @@
          })
          $.ajax({
             type: 'get',
-            url: '{{URL::to("/equipment/livesearch")}}',
+            url: '{{URL::to("/api/equipment/livesearch")}}',
             data: {
                'search': $value
             },

@@ -5,8 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\UserController;
-use App\Models\Equipment;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,15 +38,13 @@ Route::middleware(['auth:web','admin'])->group(function (){
     Route::post('/user', [UserController::class,'create'])->name('web.user.create');
     Route::put('/user/{id}', [UserController::class,'update'])->name('web.user.update');
     Route::delete('/user/{id}', [UserController::class,'destroy'])->name('web.user.delete');
-    
+
     Route::get('/category', [CategoryController::class,'index'])->name('web.category.index');
     Route::post('/category', [CategoryController::class,'store'])->name('web.category.store');
     Route::delete('/category/{category}', [CategoryController::class,'destroy'])->name('web.category.destroy');
     Route::put('/category/{category}', [CategoryController::class,'update'])->name('web.category.update');
-    
+
     Route::get('/equipment', [EquipmentController::class,'index'])->name('web.equipment.index');
-    Route::get('/equipment/search/', [EquipmentController::class,'search'])->name('web.equipment.search');
-    Route::get('/equipment/livesearch/', [EquipmentController::class,'livesearch'])->name('web.equipment.livesearch'); // live search only user
     Route::post('/equipment', [EquipmentController::class,'store'])->name('web.equipment.store');
     Route::delete('/equipment/{equipment}', [EquipmentController::class,'destroy'])->name('web.equipment.destroy');
     Route::patch('/equipment/{equipment}', [EquipmentController::class,'update'])->name('web.equipment.update');

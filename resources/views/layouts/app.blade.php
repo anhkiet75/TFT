@@ -10,7 +10,7 @@
     <!-- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-        
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
 
     <!-- Font Awesome -->
@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="css/autocomplete.css">
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
     crossorigin="anonymous"></script> -->
- 
+
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script> -->
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"></script>
@@ -34,8 +34,8 @@
 </head>
 
 <body>
-    
-  
+
+
 
 </body>
   <!--Main Navigation-->
@@ -82,16 +82,16 @@
           <img src="https://picsum.photos/id/238/300/300" height="30" alt="" loading="lazy" />
           <h3 class="mt-1 ms-1">Web App</h3>
         </a>
-      
 
-      
+
+
         <ul class="navbar-nav ms-auto d-flex flex-row">
           <li class="nav-item dropdown">
           </li>
           @auth
-  
+
           <!-- Avatar -->
-          <h6 class="mt-2">{{Auth::user()->name}}</h4>
+          <h4 class="mt-2">{{Auth::user()->name}}</h4>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#"
               id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -110,10 +110,10 @@
           <li class="d-flex">
             <button class="btn btn-outline-primary me-1">
               <a href="/login">Login</a>
-            </button> 
+            </button>
             <button class="btn btn-outline-primary">
               <a href="/register">Register</a>
-            </button> 
+            </button>
           </li>
           @endguest
 
@@ -131,11 +131,11 @@
       @yield('content')
     </div>
   </main>
-  <script language="javascript">  
+  <script language="javascript">
       let items = document.querySelectorAll("#sidebarMenu a");
       // items.addEventListener("click", {
 
-      // })  
+      // })
       // console.log(items)
   </script>
   <!--Main layout-->
