@@ -26,6 +26,7 @@ class EquipmentRepository
         return EquipmentResource::collection($this->equipment->all());
     }
 
+    // search equipment
     public function find($string) {
         // ->join('users','user_id', '=', 'users.id')
         // ->orWhere('users.id','like','%' . $string . '%')
@@ -37,6 +38,7 @@ class EquipmentRepository
         return $equipment;
     }
 
+    //search user 
     public function livesearch($string) {
         $equipment = $this->user->where('name', 'LIKE', '%' . $string . "%")->get();
         return $equipment;
