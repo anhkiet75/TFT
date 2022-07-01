@@ -19,27 +19,8 @@ use App\Models\Equipment;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Route::prefix('auth')->group(function(){
-//     Route::controller(AuthController::class)->group(function () {
-//         Route::post('login', 'login');
-//         Route::post('register', 'register');
-//         Route::post('logout', 'logout');
-//         Route::post('refresh', 'refresh');
-//     });
-// });
 
 
-// Route::middleware(['auth:api'])->group(function () {
-//         Route::apiResource('equipment', EquipmentController::class);
-//         Route::apiResource('category', CategoryController::class);
-//         Route::apiResource('user', UserController::class);
-// });
+Route::get('/equipment/search/', [EquipmentController::class,'search'])->middleware('jwt');
+Route::get('/equipment/livesearch/', [EquipmentController::class,'livesearch'])->middleware('jwt');
 
-// Route::middleware('jwt')->group(function () {
-    Route::get('/equipment/search/', [EquipmentController::class,'search'])->name('web.equipment.search')->middleware('jwt');
-    Route::get('/equipment/livesearch/', [EquipmentController::class,'livesearch'])->name('web.equipment.livesearch')->middleware('jwt');
-// });

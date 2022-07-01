@@ -45,7 +45,7 @@ class AuthController extends Controller
 
         if ($user->is_admin)
             return redirect('/')->with('success', 'You are login')->withCookie('jwt',$jwttoken);
-        return redirect('/equipment_user/' . $user->id)->with('success', 'You are login');
+        return redirect('/equipment_user/' . $user->id)->with('success', 'You are login')->withCookie('jwt',$jwttoken);;
     }
 
     public function register(Request $request){

@@ -44,7 +44,7 @@ Route::middleware(['auth:web','admin'])->group(function (){
     Route::delete('/category/{category}', [CategoryController::class,'destroy'])->name('web.category.destroy');
     Route::put('/category/{category}', [CategoryController::class,'update'])->name('web.category.update');
 
-    Route::get('/equipment', [EquipmentController::class,'index'])->name('web.equipment.index');
+    // Route::get('/equipment', [EquipmentController::class,'index'])->name('web.equipment.index');
     Route::post('/equipment', [EquipmentController::class,'store'])->name('web.equipment.store');
     Route::delete('/equipment/{equipment}', [EquipmentController::class,'destroy'])->name('web.equipment.destroy');
     Route::patch('/equipment/{equipment}', [EquipmentController::class,'update'])->name('web.equipment.update');
@@ -52,17 +52,6 @@ Route::middleware(['auth:web','admin'])->group(function (){
 
 Route::middleware(['auth:web','owner'])->get('/equipment_user/{id}', [EquipmentController::class,'show'])->name('web.equipment.show');
 
+// test jwt , normal user can access equipment page , but cannot search equipment (call api with middleware jwt) and other action like update, delete, create.
+Route::get('/equipment', [EquipmentController::class,'index'])->name('web.equipment.index')->middleware(['auth:web']);
 
-
-
-
-
-// Route::apiResource('user', UserController::class);
-// Route::resource('category', UserController::class)->only(['index','store','destroy','update']);
-// Route::apiResource('equipment', UserController::class);
-
-
-
-
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -350,7 +350,7 @@
       }
 
       addEvent()
-
+      // search equipment 
       $('#searchtable').on('keyup', function() {
          $value = $(this).val();
          $.ajaxSetup({
@@ -367,11 +367,12 @@
             success: function(data) {
                $('tbody').html(data);
                addEvent()
-               // console.log(data)
             }
          });
       })
 
+
+      //search user 
       $('.searchUpdate').on('keyup', function() {
 
          $value = $(this).val();
