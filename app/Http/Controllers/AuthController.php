@@ -34,7 +34,7 @@ class AuthController extends Controller
         $token = Auth::attempt($credentials);
 
         if (!$token) {
-            return redirect('/index')->with('error', 'Unauthorized');
+            return redirect('/login')->with('error', 'Unauthorized');
         }
         $user = Auth::user();
         $customClaims = ['sub' => $user->id, 'role'=> $user->is_admin];
